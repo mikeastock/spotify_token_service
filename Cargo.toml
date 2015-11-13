@@ -1,0 +1,4 @@
+[package]
+name = "spotify_token_service"
+version = "0.1.0"
+authors = ["Michael Stock <mikeastock@gmail.com>"]
