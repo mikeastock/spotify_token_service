@@ -4,9 +4,10 @@ version = "0.1.0"
 authors = ["Michael Stock <mikeastock@gmail.com>"]
 
 [dependencies]
+chrono = "*"
 iron = "*"
-urlencoded = "*"
-router = "*"
 logger = "*"
-rustc-serialize = "0.3"
 regex = "0.1.41"
+router = "*"
+rustc-serialize = "0.3"
+urlencoded = "*"

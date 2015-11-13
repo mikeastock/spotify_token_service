@@ -1,5 +1,6 @@
 #![feature(plugin)]
 
+extern crate chrono;
 extern crate iron;
 extern crate logger;
 extern crate router;
@@ -16,6 +17,7 @@ use handlers::*;
 fn main() {
     let mut router = Router::new();
 
+    router.get("/", StatusCheckHandler);
     router.post("/swap", SwapTokenHandler);
     router.post("/refresh", RefreshTokenHandler);
 
@@ -26,5 +28,5 @@ fn main() {
     chain.link_before(logger_before);
     chain.link_before(logger_after);
 
-    Iron.new(chain).http("localhost:3000").unwrap();
+    Iron::new(chain).http("localhost:3000").unwrap();
 }
