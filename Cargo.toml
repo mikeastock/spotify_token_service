@@ -5,6 +5,7 @@ authors = ["Michael Stock <mikeastock@gmail.com>"]
 
 [dependencies]
 chrono = "*"
+hyper = "*"
 iron = "*"
 logger = "*"
 regex = "0.1.41"

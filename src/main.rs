@@ -5,6 +5,7 @@ extern crate iron;
 extern crate logger;
 extern crate router;
 extern crate rustc_serialize;
+extern crate hyper;
 
 use iron::prelude::*;
 use logger::Logger;
