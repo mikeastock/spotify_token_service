@@ -26,7 +26,7 @@ fn main() {
     let (logger_before, logger_after) = Logger::new(None);
 
     chain.link_before(logger_before);
-    chain.link_before(logger_after);
+    chain.link_after(logger_after);
 
     Iron::new(chain).http("localhost:3000").unwrap();
 }
