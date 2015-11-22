@@ -1,11 +1,14 @@
 #![feature(plugin)]
 
 extern crate chrono;
+extern crate dotenv;
+extern crate hyper;
 extern crate iron;
 extern crate logger;
 extern crate router;
 extern crate rustc_serialize;
-extern crate hyper;
+
+use dotenv::dotenv;
 
 use iron::prelude::*;
 use logger::Logger;
@@ -16,6 +19,8 @@ mod handlers;
 use handlers::*;
 
 fn main() {
+    dotenv().ok();
+
     let mut router = Router::new();
 
     router.get("/", StatusCheckHandler);

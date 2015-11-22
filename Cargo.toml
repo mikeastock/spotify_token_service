@@ -5,6 +5,7 @@ authors = ["Michael Stock <mikeastock@gmail.com>"]
 
 [dependencies]
 chrono = "*"
+dotenv = "*"
 hyper = "*"
 iron = "*"
 logger = "*"
