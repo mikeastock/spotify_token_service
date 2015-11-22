@@ -1,7 +1,6 @@
 use iron::prelude::*;
 use iron::{Handler};
 use iron::status;
-use iron::headers::{ContentType};
 use iron::mime::{Mime};
 
 use hyper::{Client};
