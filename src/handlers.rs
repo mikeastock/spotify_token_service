@@ -7,7 +7,11 @@ use hyper::{Client};
 use hyper::client::IntoUrl;
 use hyper::header::{Headers, Authorization};
 use hyper::status as hyper_status;
+
 use std::io::Read;
+use std::env;
+
+use rustc_serialize::base64::{STANDARD, ToBase64};
 
 pub struct StatusCheckHandler;
 pub struct SwapTokenHandler;
@@ -22,12 +26,10 @@ impl Handler for StatusCheckHandler {
 }
 
 impl Handler for SwapTokenHandler {
-    fn handle(&self, req: &mut Request) -> IronResult<Response> {
+    fn handle(&self, _: &mut Request) -> IronResult<Response> {
         let client = Client::new();
 
-        let mut headers = Headers::new();
-        headers.set(Authorization("Basic".to_owned()));
-
+        let headers = SwapTokenHandler::get_headers();
         let url = format!("{}/api/token", SPOTIFY_ACCOUNTS_ENDPOINT)
             .into_url()
             .unwrap();
@@ -47,8 +49,29 @@ impl Handler for SwapTokenHandler {
     }
 }
 
+impl SwapTokenHandler {
+    fn get_headers() -> Headers {
+        let client_id = match env::var("CLIENT_ID") {
+            Ok(client_id) => client_id,
+            Err(_) => panic!("Missing CLIENT_ID")
+        };
+
+        let client_secret = match env::var("CLIENT_SECRET") {
+            Ok(client_secret) => client_secret,
+            Err(_) => panic!("Missing CLIENT_ID")
+        };
+
+        let basic = "Basic ".to_owned() + &client_id + ":" + &client_secret;
+        let secret = basic.as_bytes().to_base64(STANDARD);
+        let mut headers = Headers::new();
+        headers.set(Authorization(secret));
+
+        headers
+    }
+}
+
 impl Handler for RefreshTokenHandler {
-    fn handle(&self, req: &mut Request) -> IronResult<Response> {
+    fn handle(&self, _: &mut Request) -> IronResult<Response> {
         Ok(Response::with((hyper_status::StatusCode::Ok, "Hello World!")))
     }
 }
