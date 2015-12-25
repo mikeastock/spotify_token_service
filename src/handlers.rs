@@ -1,11 +1,11 @@
 use iron::prelude::*;
-use iron::{Handler};
+use iron::Handler;
 use iron::status;
-use iron::mime::{Mime};
+use iron::mime::Mime;
 
-use hyper::{Client};
+use hyper::Client;
 use hyper::client::IntoUrl;
-use hyper::header::{Headers, Authorization};
+use hyper::header::{Authorization, Headers};
 use hyper::status as hyper_status;
 
 use std::io::Read;
@@ -26,26 +26,29 @@ impl Handler for StatusCheckHandler {
 }
 
 impl Handler for SwapTokenHandler {
-    fn handle(&self, _: &mut Request) -> IronResult<Response> {
-        let client = Client::new();
+    fn handle(&self, req: &mut Request) -> IronResult<Response> {
+        let body = req.get::<bodyparser::Json>();
 
+        println!("{}", body);
+
+        let client = Client::new();
         let headers = SwapTokenHandler::get_headers();
         let url = format!("{}/api/token", SPOTIFY_ACCOUNTS_ENDPOINT)
-            .into_url()
-            .unwrap();
+                      .into_url()
+                      .unwrap();
 
         let mut res = client.post(url)
-            .headers(headers)
-            .send()
-            .unwrap();
+                            .headers(headers)
+                            .send()
+                            .unwrap();
 
-        let mut body = String::new();
+        let mut response_body = String::new();
 
-        res.read_to_string(&mut body).unwrap();
+        res.read_to_string(&mut response_body).unwrap();
 
         let mime: Mime = "application/json".parse().unwrap();
 
-        Ok(Response::with((res.status as status::Status, mime, body)))
+        Ok(Response::with((res.status as status::Status, mime, response_body)))
     }
 }
 
@@ -53,12 +56,12 @@ impl SwapTokenHandler {
     fn get_headers() -> Headers {
         let client_id = match env::var("CLIENT_ID") {
             Ok(client_id) => client_id,
-            Err(_) => panic!("Missing CLIENT_ID")
+            Err(_) => panic!("Missing CLIENT_ID"),
         };
 
         let client_secret = match env::var("CLIENT_SECRET") {
             Ok(client_secret) => client_secret,
-            Err(_) => panic!("Missing CLIENT_ID")
+            Err(_) => panic!("Missing CLIENT_ID"),
         };
 
         let basic = "Basic ".to_owned() + &client_id + ":" + &client_secret;

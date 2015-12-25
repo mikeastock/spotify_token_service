@@ -4,11 +4,13 @@ version = "0.1.0"
 authors = ["Michael Stock <mikeastock@gmail.com>"]
 
 [dependencies]
+bodyparser = "*"
 chrono = "*"
 dotenv = "*"
 hyper = "*"
 iron = "*"
 logger = "*"
+persistent = "*"
 regex = "0.1.41"
 router = "*"
 rustc-serialize = "0.3"
