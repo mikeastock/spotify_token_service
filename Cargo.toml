@@ -9,6 +9,7 @@ chrono = "*"
 dotenv = "*"
 hyper = "*"
 iron = "*"
+iron-test = { git = "https://github.com/reem/iron-test" }
 logger = "*"
 persistent = "*"
 regex = "0.1.41"

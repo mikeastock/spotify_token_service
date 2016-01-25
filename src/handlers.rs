@@ -78,3 +78,19 @@ impl Handler for RefreshTokenHandler {
         Ok(Response::with((hyper_status::StatusCode::Ok, "Hello World!")))
     }
 }
+
+#[cfg(test)]
+mod test {
+    use iron::Headers;
+    use iron_test::mock::request;
+    use super::*;
+
+    fn test_swap_token() {
+        let url = "http://localhost:300/swap";
+        let response = request::get(&url, Headers::new(), SwapTokenHandler);
+        let result = extract_body(response);
+        let expected_json = "";
+
+        assert_eq!(result, expected_json);
+    }
+}

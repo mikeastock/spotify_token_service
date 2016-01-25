@@ -5,6 +5,7 @@ extern crate chrono;
 extern crate dotenv;
 extern crate hyper;
 extern crate iron;
+extern crate iron_test;
 extern crate logger;
 extern crate persistent;
 extern crate router;
